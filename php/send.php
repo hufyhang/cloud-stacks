@@ -3,7 +3,7 @@ $md5= $_POST['md5'];
 $sender = $_POST['sender'];
 $recipient = $_POST['recipient'];
 $importance = strtoupper($_POST['importance']);
-$msg = htmlentities($_POST['message']);
+$msg = htmlentities($_POST['message'], ENT_QUOTES);
 $timestamp = $_POST['timestamp'];
 
 $msg = str_replace("\n", "<br/>", $msg);
