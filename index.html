@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Cloud Stacks</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" charset="utf-8" />
+</head>
+<body>
+<div id="welcome-div">
+<table class="main-table">
+    <tr style="width: 100%; height: 100%">
+        <td style="width: 30%"></td>
+        <td style="width: 40%">
+            <h1>Cloud Stacks</h1>
+            <hr/>
+        </td>
+        <td style="width: 30%"></td>
+    </tr>
+    <tr style="width: 100%; height: 100%">
+        <td style="width: 30%"></td>
+        <td style="width: 40%">
+            <input type="text" name="username" id="username" placeholder="Username" class="form-control"/>
+            <br/>
+            <input type="password" name="password" id="password" placeholder="Password" class="form-control"/>
+            <br/>
+            <button type="button" class="btn btn-success" id="sign-in-btn">Sign in</button>
+            <button type="button" class="btn btn-success" id="create-btn">Create & Sign in</button>
+        </td>
+        <td style="width: 30%"></td>
+    </tr>
+</table>
+</div>
+
+
+<!-- message box -->
+<div class="message-box-div">
+<table class="main-table">
+    <tr style="width: 100%; height: 100%">
+        <td style="width: 10%"></td>
+        <td style="width: 80%">
+            <h2 id="username-title">#developer</h2>
+            <button type="button" class="btn btn-info" id="compose-btn">Compose</button>
+            <button type="button" class="btn btn-info" id="in-btn">In</button>
+            <button type="button" class="btn btn-info" id="out-btn">Out</button>
+            <button type="button" class="btn btn-info" id="archived-btn">Archived</button>
+            <hr/>
+            <div style="width: 100%; height: 100%;" id="message-div">
+            </div>
+        </td>
+        <td style="width: 10%"></td>
+    </tr>
+</table>
+
+</div>
+
+
+<!-- message-compose-box -->
+<div class="message-compose-div">
+    <table class="main-table">
+        <tr style="height: 10%"></tr>
+        <tr style="width: 100%; height: 100%">
+            <td style="width: 20%; height: 10%;"></td>
+            <td style="width: 60%; height: 80%;">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="inputRecipient" class="control-label">Recipient</label>
+                            <div><input type="text" class="form-control" id="inputRecipient" placeholder="To..."/></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputRecipient" class="control-label">Importance</label>
+                            <div>
+                                <select class="form-control" id="importance-select">
+                                    <option>Normal</option>
+                                    <option>Important</option>
+                                    <option>Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="messageArea" class="control-label">Message</label>
+                            <textarea class="form-control" id="messageArea" name="messageArea" rows="5"></textarea>
+                        </div>
+
+                        <input type="hidden" id="username" name="username"/>
+                    </fieldset>
+                </form>
+
+                <div class="form-group">
+                    <button class="btn btn-default" id="compose-cancel-btn">Cancel</button>
+                    <button class="btn btn-primary" id="submit-btn">Send</button>
+                </div>
+
+            </td>
+            <td style="width: 20%; height: 10%;"></td>
+        </tr>
+
+    </table>
+</div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="js/sjcl.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/md5-min.js"></script>
+</body>
+</html>
