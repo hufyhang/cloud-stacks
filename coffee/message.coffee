@@ -24,7 +24,6 @@ class Message
         from = @user.getName()
         to = $('#inputRecipient').val()
         importanceLevel = $('#importance-select').val()
-        # msg = sjcl.encrypt @key, $('#messageArea').val()
         msg = $('#messageArea').val()
         now = new Date()
         time = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
