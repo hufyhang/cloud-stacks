@@ -46,7 +46,8 @@ class Message
         to = $('#inputRecipient').val()
         importanceLevel = $('#importance-select').val()
         msg = $('#messageArea').val()
-        msg = f23.s52e msg.replace /\n/g, '<br/>'
+        msg = msg.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/\n/g, '<br/>')
+        msg = f23.s52e msg
         now = new Date()
         time = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
         md5 = hex_md5 time + from + to + msg + importanceLevel
