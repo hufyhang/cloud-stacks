@@ -23,8 +23,15 @@
       this.key = 'Cloud-Stacks-Key-CODE';
     }
 
+    Message.prototype.decrypt = function() {
+      return $('.message-body').each(function() {
+        return $(this).html(f23.s52d($(this).html()));
+      });
+    };
+
     Message.prototype.fetchAll = function() {
-      var username;
+      var self, username;
+      self = this;
       window.currentLoc = 'in';
       $('#in-btn').removeClass().addClass('active');
       $('#out-btn').removeClass();
@@ -32,31 +39,36 @@
       username = this.user.getName();
       return $.ajax("php/fetch.php?username=" + username).done(function(data) {
         $("#message-div").html(data);
+        self.decrypt();
         return $('#in-counter').html($('.message-body').length);
       });
     };
 
     Message.prototype.fetchOut = function() {
-      var username;
+      var self, username;
+      self = this;
       window.currentLoc = 'out';
       $('#out-btn').removeClass().addClass('active');
       $('#in-btn').removeClass();
       $('#archived-btn').removeClass();
       username = this.user.getName();
       return $.ajax("php/fetchOut.php?username=" + username).done(function(data) {
-        return $("#message-div").html(data);
+        $("#message-div").html(data);
+        return self.decrypt();
       });
     };
 
     Message.prototype.fetchArchived = function() {
-      var username;
+      var self, username;
+      self = this;
       window.currentLoc = 'archived';
       $('#archived-btn').removeClass().addClass('active');
       $('#out-btn').removeClass();
       $('#in-btn').removeClass();
       username = this.user.getName();
       return $.ajax("php/fetchArchived.php?username=" + username).done(function(data) {
-        return $("#message-div").html(data);
+        $("#message-div").html(data);
+        return self.decrypt();
       });
     };
 
@@ -67,6 +79,7 @@
       to = $('#inputRecipient').val();
       importanceLevel = $('#importance-select').val();
       msg = $('#messageArea').val();
+      msg = f23.s52e(msg.replace(/\n/g, '<br/>'));
       now = new Date();
       time = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
       md5 = hex_md5(time + from + to + msg + importanceLevel);
