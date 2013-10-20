@@ -1,5 +1,8 @@
 class User
-    constructor: (@username) ->
+    constructor: (@username, @password) ->
     getName: ->
         @username
+
+    getPassword: ->
+        @password
 

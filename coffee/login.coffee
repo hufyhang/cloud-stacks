@@ -6,7 +6,7 @@ class Login
         password = hex_md5 password
         $.ajax('php/login.php?username=' + username + '&password=' + password).done (data) ->
             if data is 'OK'
-                window.user = new User username
+                window.user = new User username, password
                 $('#welcome-div').html ''
                 $('.message-box-div').css 'visibility', 'visible'
                 $('#username-title').html '#' + window.user.getName()

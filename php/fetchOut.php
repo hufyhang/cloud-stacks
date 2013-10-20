@@ -1,9 +1,10 @@
 <?php
-$username= $_GET['username'];
+$username= $_POST['username'];
+$password = $_POST['password'];
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
-function fetchDB($username) {
+function fetchDB($username, $password) {
     $res = '';
     $con=mysqli_connect("31.22.4.32","feifeiha_public","p0OnMM722iqZ","feifeiha_cloud_stacks");
 
@@ -12,6 +13,13 @@ function fetchDB($username) {
     {
         $res = "Failed to connect to MySQL: " . mysqli_connect_error();
     }
+    $result = mysqli_query($con,"SELECT * FROM users WHERE username='" . $username . "'");
+    while($row = mysqli_fetch_array($result)) {
+        if($row['password'] !== $password) {
+            return 'Invalid username or password.';
+        }
+    }
+
     $result = mysqli_query($con,"SELECT * FROM messages WHERE sender='" . $username . "' ORDER BY id DESC");
     while($row = mysqli_fetch_array($result))
     {
@@ -33,5 +41,5 @@ function fetchDB($username) {
     return $res;
 }
 
-echo fetchDB($username);
+echo fetchDB($username, $password);
 ?>

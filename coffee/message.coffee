@@ -13,7 +13,7 @@ class Message
         $('#out-btn').removeClass()
         $('#archived-btn').removeClass()
         username = @user.getName()
-        $.ajax("php/fetch.php?username=" + username).done (data) ->
+        $.post("php/fetch.php", {username: username, password: @user.getPassword()}).done (data) ->
             $("#message-div").html data
             self.decrypt()
             $('#in-counter').html $('.message-body').length
@@ -25,7 +25,7 @@ class Message
         $('#in-btn').removeClass()
         $('#archived-btn').removeClass()
         username = @user.getName()
-        $.ajax("php/fetchOut.php?username=" + username).done (data) ->
+        $.post("php/fetchOut.php", {username: username, password: @user.getPassword()}).done (data) ->
             $("#message-div").html data
             self.decrypt()
 
@@ -36,7 +36,7 @@ class Message
         $('#out-btn').removeClass()
         $('#in-btn').removeClass()
         username = @user.getName()
-        $.ajax("php/fetchArchived.php?username=" + username).done (data) ->
+        $.post("php/fetchArchived.php", {username: username, password: @user.getPassword()}).done (data) ->
             $("#message-div").html data
             self.decrypt()
 
