@@ -25,28 +25,38 @@
 
     Message.prototype.fetchAll = function() {
       var username;
+      window.currentLoc = 'in';
+      $('#in-btn').removeClass().addClass('active');
+      $('#out-btn').removeClass();
+      $('#archived-btn').removeClass();
       username = this.user.getName();
       return $.ajax("php/fetch.php?username=" + username).done(function(data) {
         $("#message-div").html(data);
-        return $('#username-title').html('#' + window.user.getName() + ' -in');
+        return $('#in-counter').html($('.message-body').length);
       });
     };
 
     Message.prototype.fetchOut = function() {
       var username;
+      window.currentLoc = 'out';
+      $('#out-btn').removeClass().addClass('active');
+      $('#in-btn').removeClass();
+      $('#archived-btn').removeClass();
       username = this.user.getName();
       return $.ajax("php/fetchOut.php?username=" + username).done(function(data) {
-        $("#message-div").html(data);
-        return $('#username-title').html('#' + window.user.getName() + ' -out');
+        return $("#message-div").html(data);
       });
     };
 
     Message.prototype.fetchArchived = function() {
       var username;
+      window.currentLoc = 'archived';
+      $('#archived-btn').removeClass().addClass('active');
+      $('#out-btn').removeClass();
+      $('#in-btn').removeClass();
       username = this.user.getName();
       return $.ajax("php/fetchArchived.php?username=" + username).done(function(data) {
-        $("#message-div").html(data);
-        return $('#username-title').html('#' + window.user.getName() + ' -archived');
+        return $("#message-div").html(data);
       });
     };
 
@@ -161,6 +171,7 @@
 
   $(function() {
     window.user;
+    window.currentLoc;
     return initEvents();
   });
 
@@ -178,9 +189,16 @@
 
   window.archive = function(_md5) {
     $.post('php/archive.php', {
-      md5: _md5
+      md5: _md5,
+      username: window.user.getName()
     });
-    return $('#title-' + _md5).removeClass().addClass('panel panel-default');
+    $('#title-' + _md5).removeClass().addClass('panel panel-default');
+    if (window.currentLoc === 'in') {
+      $('#in-counter').html(parseInt($('#in-counter').html()) - 1);
+    }
+    if (window.currentLoc === 'archived') {
+      return $('#in-counter').html(parseInt($('#in-counter').html()) + 1);
+    }
   };
 
   window.reply = function(_sender) {

@@ -2,22 +2,32 @@ class Message
     constructor: (@user) ->
         @key = 'Cloud-Stacks-Key-CODE'
     fetchAll: ->
+        window.currentLoc = 'in'
+        $('#in-btn').removeClass().addClass 'active'
+        $('#out-btn').removeClass()
+        $('#archived-btn').removeClass()
         username = @user.getName()
         $.ajax("php/fetch.php?username=" + username).done (data) ->
             $("#message-div").html data
-            $('#username-title').html '#' + window.user.getName() + ' -in'
+            $('#in-counter').html $('.message-body').length
 
     fetchOut: ->
+        window.currentLoc = 'out'
+        $('#out-btn').removeClass().addClass 'active'
+        $('#in-btn').removeClass()
+        $('#archived-btn').removeClass()
         username = @user.getName()
         $.ajax("php/fetchOut.php?username=" + username).done (data) ->
             $("#message-div").html data
-            $('#username-title').html '#' + window.user.getName() + ' -out'
 
     fetchArchived: ->
+        window.currentLoc = 'archived'
+        $('#archived-btn').removeClass().addClass 'active'
+        $('#out-btn').removeClass()
+        $('#in-btn').removeClass()
         username = @user.getName()
         $.ajax("php/fetchArchived.php?username=" + username).done (data) ->
             $("#message-div").html data
-            $('#username-title').html '#' + window.user.getName() + ' -archived'
 
     send: ->
         self = @

@@ -15,7 +15,7 @@ function fetchDB($username) {
     $result = mysqli_query($con,"SELECT * FROM messages WHERE recipient LIKE '%" . $username . "%' ORDER BY id DESC");
     while($row = mysqli_fetch_array($result))
     {
-        if($row['archived'] == 'yes') {
+        if(strpos($row['archived'], $username) !== false) {
             continue;
         }
 
