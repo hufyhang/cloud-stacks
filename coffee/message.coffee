@@ -44,6 +44,9 @@ class Message
         self = @
         from = @user.getName()
         to = $('#inputRecipient').val()
+        if to is ""
+            alert "Oops... You forgot to the recipients."
+            return
         importanceLevel = $('#importance-select').val()
         msg = $('#messageArea').val()
         msg = msg.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/\n/g, '<br/>')

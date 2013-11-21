@@ -7,8 +7,10 @@ window.closeCompose = ->
     $('#inputRecipient').val ''
     $('#messageArea').val ''
     $('.message-compose-div').css 'visibility', 'hidden'
+    $('.blank-background').css 'visibility', 'hidden'
 
 window.showCompose = (_recipient) ->
+    $('.blank-background').css 'visibility', 'visible'
     $('.message-compose-div').css 'visibility', 'visible'
     $('#inputRecipient').val _recipient
     $('#username').val window.user.getName()
