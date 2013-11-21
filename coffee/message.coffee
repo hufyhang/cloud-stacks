@@ -45,7 +45,7 @@ class Message
         from = @user.getName()
         to = $('#inputRecipient').val()
         if to is ""
-            alert "Oops... You forgot to the recipients."
+            alert "Oops... You forgot to set the recipients."
             return
         importanceLevel = $('#importance-select').val()
         msg = $('#messageArea').val()
