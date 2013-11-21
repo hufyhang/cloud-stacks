@@ -1,7 +1,7 @@
 <?php
 $username= $_GET['username'];
 $password= $_GET['password'];
-header('Content-Type: text/event-stream');
+header('Content-Type: text/plain');
 header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
 function login($username, $password) {

@@ -8,7 +8,7 @@ $timestamp = $_POST['timestamp'];
 
 $msg = str_replace("\n", "<br/>", $msg);
 
-header('Content-Type: text/event-stream');
+header('Content-Type: text/plain');
 header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
 $con=mysqli_connect("31.22.4.32","feifeiha_public","p0OnMM722iqZ","feifeiha_cloud_stacks");
@@ -17,6 +17,7 @@ $con=mysqli_connect("31.22.4.32","feifeiha_public","p0OnMM722iqZ","feifeiha_clou
 if (mysqli_connect_errno($con))
 {
     $res = "Failed to connect to MySQL: " . mysqli_connect_error();
+    return $res;
 }
 
 if($importance == 'NORMAL') {
@@ -32,7 +33,8 @@ else {
     $importance = 0;
 }
 
-mysqli_query($con, "INSERT INTO messages (md5, sender, recipient, Importance, message, timestamp) VALUES ('" . $md5 . "', '" . $sender . "','" . $recipient . "','" . $importance . "','" . $msg . "','" . $timestamp . "')");
+mysqli_query($con, "INSERT INTO messages (md5, sender, recipient, importance, message, timestamp) VALUES ('" . $md5 . "', '" . $sender . "','" . $recipient . "','" . $importance . "','" . $msg . "','" . $timestamp . "')");
 
 mysqli_close($con);
+return "OK";
 ?>

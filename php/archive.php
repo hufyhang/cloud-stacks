@@ -1,7 +1,7 @@
 <?php
 $md5= $_POST['md5'];
 $username= $_POST['username'];
-header('Content-Type: text/event-stream');
+header('Content-Type: text/plain');
 header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
 function archive($md5, $username) {
