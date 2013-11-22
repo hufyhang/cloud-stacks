@@ -1,7 +1,7 @@
 class Login
     constructor: ->
     login: ->
-        username = $('#username').val()
+        username = $('#user').val()
         password = $('#password').val()
         password = hex_md5 password
         $.ajax('php/login.php?username=' + username + '&password=' + password).done (data) ->
