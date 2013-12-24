@@ -95,6 +95,8 @@
         alert("Oops... You forgot to set the recipients.");
         return;
       }
+      // ensure regex works
+      to += ' ';
       importanceLevel = $('#importance-select').val();
       msg = $('#messageArea').val();
       // msg = msg.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");

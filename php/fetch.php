@@ -21,7 +21,8 @@ function fetchDB($username, $password) {
     }
 
 
-    $result = mysqli_query($con,"SELECT * FROM messages WHERE recipient LIKE '%" . $username . "' ORDER BY id DESC");
+    // $result = mysqli_query($con,"SELECT * FROM messages WHERE recipient LIKE '%" . $username . "%' ORDER BY id DESC");
+    $result = mysqli_query($con,"SELECT * FROM messages WHERE recipient REGEXP '" . $username . "[^A-Za-z0-9\.\-]' ORDER BY id DESC");
     while($row = mysqli_fetch_array($result))
     {
         if(strpos($row['archived'], $username) !== false) {
