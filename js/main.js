@@ -1,1 +1,255 @@
-(function(){var Login,Message,User,initEvents;User=(function(){function User(username,password){this.username=username;this.password=password}User.prototype.getName=function(){return this.username};User.prototype.getPassword=function(){return this.password};return User})();Message=(function(){function Message(user){this.user=user;this.key='Cloud-Stacks-Key-CODE'}Message.prototype.decrypt=function(){return $('.message-body').each(function(){return $(this).html(f23.s52d($(this).html()))})};Message.prototype.fetchAll=function(){var self,username;self=this;window.currentLoc='in';$('#in-btn').removeClass().addClass('active');$('#out-btn').removeClass();$('#archived-btn').removeClass();username=this.user.getName();return $.post("php/fetch.php",{username:username,password:this.user.getPassword()}).done(function(data){$("#message-div").html(data);self.decrypt();return $('#in-counter').html($('.message-body').length)})};Message.prototype.fetchOut=function(){var self,username;self=this;window.currentLoc='out';$('#out-btn').removeClass().addClass('active');$('#in-btn').removeClass();$('#archived-btn').removeClass();username=this.user.getName();return $.post("php/fetchOut.php",{username:username,password:this.user.getPassword()}).done(function(data){$("#message-div").html(data);return self.decrypt()})};Message.prototype.fetchArchived=function(){var self,username;self=this;window.currentLoc='archived';$('#archived-btn').removeClass().addClass('active');$('#out-btn').removeClass();$('#in-btn').removeClass();username=this.user.getName();return $.post("php/fetchArchived.php",{username:username,password:this.user.getPassword()}).done(function(data){$("#message-div").html(data);return self.decrypt()})};Message.prototype.send=function(){var from,importanceLevel,md5,msg,now,self,time,to;self=this;from=this.user.getName();to=$('#inputRecipient').val();importanceLevel=$('#importance-select').val();msg=$('#messageArea').val();msg=msg.replace(/&/g,"&amp;").replace(/>/g,"&gt;").replace(/</g,"&lt;").replace(/"/g,"&quot;").replace(/\n/g,'<br/>');msg=f23.s52e(msg);now=new Date();time=now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear()+' '+now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();md5=hex_md5(time+from+to+msg+importanceLevel);return $.post('php/send.php',{sender:from,recipient:to,importance:importanceLevel,message:msg,md5:md5,timestamp:time}).done(function(data){closeCompose();return self.fetchAll()})};return Message})();Login=(function(){function Login(){}Login.prototype.login=function(){var password,username;username=$('#username').val();password=$('#password').val();password=hex_md5(password);return $.ajax('php/login.php?username='+username+'&password='+password).done(function(data){var message;if(data==='OK'){window.user=new User(username,password);$('#welcome-div').html('');$('.message-box-div').css('visibility','visible');$('#username-title').html('#'+window.user.getName());message=new Message(window.user);return message.fetchAll()}else{$('#username').val('Invalid username or password');return $('#password').val('')}})};return Login})();initEvents=function(){$('#password').keypress(function(e){if(e.which===13){return $('#sign-in-btn').click()}});$("#sign-in-btn").bind('click',function(){var login;login=new Login();return login.login()});$('#compose-btn').bind('click',function(){return showCompose('')});$('#compose-cancel-btn').bind('click',function(){return closeCompose()});$('#submit-btn').bind('click',function(){var msg;msg=new Message(window.user);return msg.send()});$('#in-btn').bind('click',function(){var msg;msg=new Message(window.user);msg.fetchAll();return $('#nav').html('-in')});$('#out-btn').bind('click',function(){var msg;msg=new Message(window.user);msg.fetchOut();return $('#nav').html('-out')});$('#archived-btn').bind('click',function(){var msg;msg=new Message(window.user);return msg.fetchArchived()});return $('#create-btn').bind('click',function(){return $.post('php/create.php',{username:$('#username').val(),password:hex_md5($('#password').val())}).done(function(data){if(data==='OK'){return $('#sign-in-btn').click()}else{return $('#username').val('Please choose another username.')}})})};$(function(){window.user;window.currentLoc;return initEvents()});window.closeCompose=function(){$('#inputRecipient').val('');$('#messageArea').val('');return $('.message-compose-div').css('visibility','hidden')};window.showCompose=function(_recipient){$('.message-compose-div').css('visibility','visible');$('#inputRecipient').val(_recipient);return $('#username').val(window.user.getName())};window.archive=function(_md5){$.post('php/archive.php',{md5:_md5,username:window.user.getName()});$('#title-'+_md5).removeClass().addClass('panel panel-default');if(window.currentLoc==='in'){$('#in-counter').html(parseInt($('#in-counter').html())-1)}if(window.currentLoc==='archived'){return $('#in-counter').html(parseInt($('#in-counter').html())+1)}};window.reply=function(_sender){return showCompose(_sender)}}).call(this);
+// Generated by CoffeeScript 1.4.0
+(function() {
+  var Login, Message, User, initEvents;
+
+  User = (function() {
+
+    function User(username, password) {
+      this.username = username;
+      this.password = password;
+    }
+
+    User.prototype.getName = function() {
+      return this.username;
+    };
+
+    User.prototype.getPassword = function() {
+      return this.password;
+    };
+
+    return User;
+
+  })();
+
+  Message = (function() {
+
+    function Message(user) {
+      this.user = user;
+      this.key = 'Cloud-Stacks-Key-CODE';
+    }
+
+    Message.prototype.decrypt = function() {
+      return $('.message-body').each(function() {
+        return $(this).html(f23.s52d($(this).html()));
+      });
+    };
+
+    Message.prototype.fetchAll = function() {
+      var self, username;
+      self = this;
+      window.currentLoc = 'in';
+      $('#in-btn').removeClass().addClass('active');
+      $('#out-btn').removeClass();
+      $('#archived-btn').removeClass();
+      username = this.user.getName();
+      return $.post("php/fetch.php", {
+        username: username,
+        password: this.user.getPassword()
+      }).done(function(data) {
+        $("#message-div").html(data);
+        self.decrypt();
+        return $('#in-counter').html($('.message-body').length);
+      });
+    };
+
+    Message.prototype.fetchOut = function() {
+      var self, username;
+      self = this;
+      window.currentLoc = 'out';
+      $('#out-btn').removeClass().addClass('active');
+      $('#in-btn').removeClass();
+      $('#archived-btn').removeClass();
+      username = this.user.getName();
+      return $.post("php/fetchOut.php", {
+        username: username,
+        password: this.user.getPassword()
+      }).done(function(data) {
+        $("#message-div").html(data);
+        return self.decrypt();
+      });
+    };
+
+    Message.prototype.fetchArchived = function() {
+      var self, username;
+      self = this;
+      window.currentLoc = 'archived';
+      $('#archived-btn').removeClass().addClass('active');
+      $('#out-btn').removeClass();
+      $('#in-btn').removeClass();
+      username = this.user.getName();
+      return $.post("php/fetchArchived.php", {
+        username: username,
+        password: this.user.getPassword()
+      }).done(function(data) {
+        $("#message-div").html(data);
+        return self.decrypt();
+      });
+    };
+
+    Message.prototype.send = function() {
+      var from, importanceLevel, md5, msg, now, self, time, to;
+      self = this;
+      from = this.user.getName();
+      to = $('#inputRecipient').val();
+      if (to === "") {
+        alert("Oops... You forgot to set the recipients.");
+        return;
+      }
+      importanceLevel = $('#importance-select').val();
+      msg = $('#messageArea').val();
+      // msg = msg.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+      var converter = new Markdown.Converter();
+      msg = converter.makeHtml(msg);
+      msg = f23.s52e(msg);
+      now = new Date();
+      time = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+      md5 = hex_md5(time + from + to + msg + importanceLevel);
+      return $.post('php/send.php', {
+        sender: from,
+        recipient: to,
+        importance: importanceLevel,
+        message: msg,
+        md5: md5,
+        timestamp: time
+      }).done(function(data) {
+        closeCompose();
+        return self.fetchAll();
+      });
+    };
+
+    return Message;
+
+  })();
+
+  Login = (function() {
+
+    function Login() {}
+
+    Login.prototype.login = function() {
+      var password, username;
+      username = $('#user').val();
+      password = $('#password').val();
+      password = hex_md5(password);
+      return $.ajax('php/login.php?username=' + username + '&password=' + password).done(function(data) {
+        var message;
+        if (data === 'OK') {
+          window.user = new User(username, password);
+          $('#welcome-div').html('');
+          $('.message-box-div').css('visibility', 'visible');
+          $('#username-title').html('#' + window.user.getName());
+          message = new Message(window.user);
+          return message.fetchAll();
+        } else {
+          $('#user').val('Invalid username or password');
+          return $('#password').val('');
+        }
+      });
+    };
+
+    return Login;
+
+  })();
+
+  initEvents = function() {
+      $("#messageArea").keydown(function(e) {
+          var $this, end, start;
+          if (e.keyCode === 9) {
+              start = this.selectionStart;
+              end = this.selectionEnd;
+              $this = $(this);
+              $this.val($this.val().substring(0, start) + "\t" + $this.val().substring(end));
+              this.selectionStart = this.selectionEnd = start + 1;
+              return false;
+          }
+      });
+    $('#password').keypress(function(e) {
+      if (e.which === 13) {
+        return $('#sign-in-btn').click();
+      }
+    });
+    $("#sign-in-btn").bind('click', function() {
+      var login;
+      login = new Login();
+      return login.login();
+    });
+    $('#compose-btn').bind('click', function() {
+      return showCompose('');
+    });
+    $('#compose-cancel-btn').bind('click', function() {
+      return closeCompose();
+    });
+    $('#submit-btn').bind('click', function() {
+      var msg;
+      msg = new Message(window.user);
+      return msg.send();
+    });
+    $('#in-btn').bind('click', function() {
+      var msg;
+      msg = new Message(window.user);
+      msg.fetchAll();
+      return $('#nav').html('-in');
+    });
+    $('#out-btn').bind('click', function() {
+      var msg;
+      msg = new Message(window.user);
+      msg.fetchOut();
+      return $('#nav').html('-out');
+    });
+    $('#archived-btn').bind('click', function() {
+      var msg;
+      msg = new Message(window.user);
+      return msg.fetchArchived();
+    });
+    return $('#create-btn').bind('click', function() {
+      return $.post('php/create.php', {
+        username: $('#user').val(),
+        password: hex_md5($('#password').val())
+      }).done(function(data) {
+        if (data === 'OK') {
+          return $('#sign-in-btn').click();
+        } else {
+          return $('#user').val('Please choose another username.');
+        }
+      });
+    });
+  };
+
+  $(function() {
+    window.user;
+    window.currentLoc;
+    return initEvents();
+  });
+
+  window.closeCompose = function() {
+    $('#inputRecipient').val('');
+    $('#messageArea').val('');
+    $('.message-compose-div').css('visibility', 'hidden');
+    return $('.blank-background').css('visibility', 'hidden');
+  };
+
+  window.showCompose = function(_recipient) {
+    $('.blank-background').css('visibility', 'visible');
+    $('.message-compose-div').css('visibility', 'visible');
+    $('#inputRecipient').val(_recipient);
+    return $('#username').val(window.user.getName());
+  };
+
+  window.archive = function(_md5) {
+    $.post('php/archive.php', {
+      md5: _md5,
+      username: window.user.getName()
+    });
+    $('#title-' + _md5).removeClass().addClass('panel panel-default');
+    if (window.currentLoc === 'in') {
+      $('#in-counter').html(parseInt($('#in-counter').html()) - 1);
+    }
+    if (window.currentLoc === 'archived') {
+      return $('#in-counter').html(parseInt($('#in-counter').html()) + 1);
+    }
+  };
+
+  window.reply = function(_sender) {
+    return showCompose(_sender);
+  };
+
+}).call(this);

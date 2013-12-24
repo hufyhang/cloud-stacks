@@ -21,7 +21,7 @@ function fetchDB($username, $password) {
     }
 
 
-    $result = mysqli_query($con,"SELECT * FROM messages WHERE recipient LIKE '%" . $username . "%' ORDER BY id DESC");
+    $result = mysqli_query($con,"SELECT * FROM messages WHERE recipient LIKE '%" . $username . "' ORDER BY id DESC");
     while($row = mysqli_fetch_array($result))
     {
         if(strpos($row['archived'], $username) !== false) {
@@ -35,6 +35,7 @@ function fetchDB($username, $password) {
         else if($row['importance'] == 2) {
             $importance = 'panel panel-danger';
         }
+
         $res = $res . '<div id="title-' . $row['md5'] . '" class="' . $importance . '" ><div class="panel-heading" style="cursor:pointer;" onclick="reply(\'' . $row['sender'] . '\');"> <h3 class="panel-title">From: #' . $row['sender'] . ' (' . $row['timestamp'] . ')</h3></div><div class="panel-body"><div class="message-body">' . $row['message'] . '</div><br/><div style="cursor:pointer;" class="label label-default" onclick="archive(\'' . $row['md5'] . '\');">Archive</div></div></div>';
     }
 

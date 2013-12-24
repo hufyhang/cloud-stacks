@@ -12,7 +12,7 @@ if (mysqli_connect_errno($con))
 {
     $res = "Failed to connect to MySQL: " . mysqli_connect_error();
 }
-$result = mysqli_query($con,"SELECT * FROM users WHERE username='" . $username . "'");
+$result = mysqli_query($con,"SELECT * FROM users WHERE username LIKE '%" . $username . "%'");
 while($row = mysqli_fetch_array($result))
 {
     echo 'ERROR';

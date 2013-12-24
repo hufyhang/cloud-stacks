@@ -17,7 +17,8 @@ $con=mysqli_connect("31.22.4.32","feifeiha_public","p0OnMM722iqZ","feifeiha_clou
 if (mysqli_connect_errno($con))
 {
     $res = "Failed to connect to MySQL: " . mysqli_connect_error();
-    return $res;
+    echo $res;
+    return;
 }
 
 if($importance == 'NORMAL') {
@@ -36,5 +37,5 @@ else {
 mysqli_query($con, "INSERT INTO messages (md5, sender, recipient, importance, message, timestamp) VALUES ('" . $md5 . "', '" . $sender . "','" . $recipient . "','" . $importance . "','" . $msg . "','" . $timestamp . "')");
 
 mysqli_close($con);
-return "OK";
+echo "OK";
 ?>
