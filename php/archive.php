@@ -16,7 +16,7 @@ function archive($md5, $username) {
     $result = mysqli_query($con,"SELECT * FROM messages WHERE md5='" . $md5 . "'");
     while($row = mysqli_fetch_array($result)) {
         if(strpos($row['archived'], $username) == false) {
-            $res = $row['archived'] . ' ' . $username;
+            $res = $row['archived'] . ' ' . $username . ' ';
         }
         else {
             $res = str_replace($username, "", $row['archived']);
